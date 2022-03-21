@@ -152,19 +152,19 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-我的第一篇博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-win10下搭建hexo博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2022/03/21/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">我的第一篇博客</a>
+      <a class="article-title" href="/2022/03/21/win10%E4%B8%8B%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2/">windows下搭建hexo博客</a>
     </h1>
   
 
         
-        <a href="/2022/03/21/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="archive-article-date">
+        <a href="/2022/03/21/win10%E4%B8%8B%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2/" class="archive-article-date">
   	<time datetime="2022-03-21T14:53:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-21</time>
 </a>
         
@@ -172,7 +172,52 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>1.安装nodejs</p>
+<p>2.切换淘宝源(有梯子则切换)： npm install -g cnpm –registry &#x3D;<a target="_blank" rel="noopener" href="https://registry.npm.taobao.org/">https://registry.npm.taobao.org</a></p>
+<p>3.安装hexo:  cnpm install -g hexo-cli</p>
+<p>4.使用hexo搭建。</p>
+<ul>
+<li><p>新建blog文件夹</p>
+</li>
+<li><p>初始化sudo hexo init或 hexo init   </p>
+<ul>
+<li><p>windows管理员权限出现问题。hexo : 无法加载文件 C:\Users\xxx\AppData\Roaming\npm\hexo.ps1，因为在此系统上禁止运行脚本。</p>
+</li>
+<li><p>解决方案<br>在默认情况下，我们是无法执行<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=powershell&spm=1001.2101.3001.7020">powershell</a>脚本的， 需要更改执行策略。win10下更改执行策略：<br>1.打开设置</p>
+<p>2.搜索power</p>
+<p>选择选项：允许本地powershell在不签名的情况下运行<br>3.勾选，点击应用就可以了</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>5.启动hexo s。 </p>
+<p>6.github新建仓库。 仓库名必须是 用户名.github.io </p>
+<ul>
+<li>例如junjieliao593新建的仓库名为：junjieliao593.github.io.git</li>
+</ul>
+<p>7.本地下载git插件</p>
+<ul>
+<li>cnpm install –save hexo-deployer-git</li>
+</ul>
+<p>8.设置blog目录下__cofig.yml配置。</p>
+<ul>
+<li>Deloyment配置git仓库地址及分支 <ul>
+<li>deploy:<br>type: git<br>repo: <a target="_blank" rel="noopener" href="https://github.com/junjieliao593/junjieliao593.github.io">https://github.com/junjieliao593/junjieliao593.github.io</a><br>branch: master</li>
+</ul>
+</li>
+</ul>
+<p>9.部署发布hexo d</p>
+<p>10.访问junjieliao593.github.io</p>
+<p>11.主题<a target="_blank" rel="noopener" href="https://github.com/litten/hexo-theme-yilia">https://github.com/litten/hexo-theme-yilia</a></p>
+<ul>
+<li>git clone <a target="_blank" rel="noopener" href="https://github.com/litten/hexo-theme-yilia.git">https://github.com/litten/hexo-theme-yilia.git</a> themes&#x2F;yilia</li>
+<li>修改blog目录下_config.yml配置：   theme:  yilia</li>
+<li>清理hexo clean</li>
+<li>重构hexo g</li>
+<li>预览hexo s</li>
+<li>推到远程仓库hexo d</li>
+</ul>
+
       
 
       
@@ -184,7 +229,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2022/03/21/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">展开全文 >></a>
+          <a class="article-more-a" href="/2022/03/21/win10%E4%B8%8B%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2/">展开全文 >></a>
         </p>
       
 
