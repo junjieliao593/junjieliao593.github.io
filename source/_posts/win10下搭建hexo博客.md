@@ -75,6 +75,8 @@ https://github.com/litten/hexo-theme-yilia
 - 预览hexo s
 - 推到远程仓库hexo d
 
+- 其他主题https://github.com/theme-next/hexo-theme-next
+
 ##  12.编辑 
 
 文章md文件存放在 blog\source\_posts目录下，用其他编辑器操作即可。

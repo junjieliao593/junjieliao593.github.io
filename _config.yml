@@ -3,11 +3,11 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: FreeTime
 subtitle: ''
 description: ''
 keywords:
-author: John Doe
+author: ljj
 language: en
 timezone: ''
 
@@ -97,6 +97,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
+##theme: yilia  https://github.com/litten/hexo-theme-yilia
 theme: yilia
 
 # Deployment
