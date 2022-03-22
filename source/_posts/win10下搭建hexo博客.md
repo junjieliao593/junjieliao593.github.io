@@ -77,7 +77,7 @@ https://github.com/litten/hexo-theme-yilia
 
 ##  12.编辑 
 
-文章md文件存放在 blog\source\_posts目录下，用其他编辑器操作即可
+文章md文件存放在 blog\source\_posts目录下，用其他编辑器操作即可。
 
 ## 13. 后续可参考文档
 
