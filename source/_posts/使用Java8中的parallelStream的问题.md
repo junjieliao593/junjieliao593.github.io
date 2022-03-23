@@ -1,13 +1,13 @@
 ---
-title: 使用Java8中的parallelStream的问题
+title: 使用Java8中的parallelStream的一次问题记录
 date: 2022-03-23 00:27:51
 tags:
 toc: true
 ---
 在 java8 中 添加了流Stream，可以让你以一种声明的方式处理数据。使用起来非常简单优雅。ParallelStream 则是一个并行执行的流，采用 ForkJoinPool 并行执行任务，提高执行速度。
 
-## 现象
-出现报错
+## 1. 现象
+压测出现报错
 ```
 2022-03-19 16:32:08
 Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.211-b12 mixed mode):
@@ -57,3 +57,48 @@ Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.211-b12 mixed mode):
 	at java.util.concurrent.ForkJoinTask.doInvoke(ForkJoinTask.java:404)
 	at java.util.concurrent.ForkJoinTask.invoke(ForkJoinTask.java:734)
 ```
+错误日志指向ForkJoinTask，线程发生阻塞。项目代码
+```
+ .....
+
+List<CardData> finalCardDataList = cardDataList;
+return pageCards.parallelStream()  //第一次并行流
+			.sorted(Comparator.comparingInt(PageCard::getLevel).reversed())
+			.map(pageCard -> {
+				PageCardModel pageCardModel = new PageCardModel();
+				pageCardModel.setBase(cards.parallelStream() //第二次并行流
+						.filter(card -> StringUtils.equals(card.getId(), pageCard.getCardId())).findAny().orElse(null));
+				pageCardModel.setData(finalCardDataList.parallelStream() //第三次并行流
+						.filter(cardData -> StringUtils.equals(cardData.getId(), pageCard.getDataId())).findAny().orElse(null));
+				pageCardModel.setStyle(pageCard.getStyle());
+				pageCardModel.setId(pageCard.getId());
+				pageCardModel.setName(pageCard.getName());
+				return pageCardModel;
+			}).collect(Collectors.toList());
+}
+
+parallelStream流内，嵌套两层，并返回大json数据，导致线程占满，IO阻塞
+```
+
+## 2. 初步推测
+### 并行流陷阱
+- 线程安全
+	- 由于并行流使用多线程，则一切线程安全问题都应该是需要考虑的问题，如：资源竞争、死锁、事务、可见性等等
+- 线程消费
+	- 在虚拟机启动时，我们指定了worker线程的数量，整个程序的生命周期都将使用这些工作线程；这必然存在任务生产和消费的问题，如果某个生产者生产了许多重量级的任务（耗时很长），那么其他任务毫无疑问将会没有工作线程可用；更可怕的事情是这些工作线程正在进行IO阻塞。
+
+## 3.设置并行参数
+我们可以通过虚拟机启动参数，控制ForkJoinPool的线程数
+-Djava.util.concurrent.ForkJoinPool.common.parallelism=N
+
+来设置worker的数量。
+
+## 4. 扩展
+parallelStreams()，使用ForkJoinPool。
+资源耗尽时使用线程池的默认拒绝策略，在默认的ThreadPoolExecutor.AbortPolicy中，处理程序抛出一个拒绝后运行时RejectedExecutionException。
+
+
+## 4. 小结
+串行流：适合存在线程安全问题、阻塞任务、重量级任务，以及需要使用同一事务的逻辑。
+
+并行流：适合没有线程安全问题、较单纯的数据处理任务。
