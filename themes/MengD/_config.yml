@@ -105,7 +105,7 @@ rightside:
 sidebar: 
   enable: true # 是否开启
   sticky: true # 固定显示
-  area: left # 左边: left  右边: right
+  area: right # 左边: left  右边: right
 
 # 文章版权
 copyright:
@@ -228,7 +228,7 @@ import:
 # 页脚
 footer:
   since: 2020
-  customText: 我相信我可以，但我一直在路上，所以我有无限的可能！！
+  customText: 我相信我可以，一直在路上，所以我有无限的可能！！
   icp:
     enable: false
     text:
