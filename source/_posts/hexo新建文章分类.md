@@ -6,5 +6,6 @@ toc: true
 ---
 
 如何创建分类
+<!--more-->
 ## 1.创建页面
 hexo new page categories

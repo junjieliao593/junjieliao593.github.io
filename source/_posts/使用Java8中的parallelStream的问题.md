@@ -6,6 +6,8 @@ toc: true
 ---
 在 java8 中 添加了流Stream，可以让你以一种声明的方式处理数据。使用起来非常简单优雅。ParallelStream 则是一个并行执行的流，采用 ForkJoinPool 并行执行任务，提高执行速度。
 
+<!--more-->
+
 ## 1. 现象
 压测出现报错
 ```

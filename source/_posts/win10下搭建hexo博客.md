@@ -7,6 +7,8 @@ toc: true
 
 [TOC]
 
+<!--more-->
+
 ## 1.安装nodejs
 
 略
