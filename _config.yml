@@ -40,7 +40,7 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:
@@ -107,3 +107,12 @@ deploy:
     type: git
     repo: https://github.com/junjieliao593/junjieliao593.github.io
     branch: master
+
+
+# #目前已安装的插件：
+# ## MengD主题相关
+# npm install hexo-theme-mengd --save
+# npm install hexo-generator-search --save 
+# npm install hexo-minify --save
+# ## 图片上传
+# npm install hexo-asset-image --save

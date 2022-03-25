@@ -1,8 +1,9 @@
 ---
 title: windows下搭建hexo博客
-date: 2022-03-21 22:53:55
-tags: 无
+date: 2022-03-18 22:53:55
+tags: hexo
 toc: true
+categories: hexo使用
 ---
 
 [TOC]
@@ -88,4 +89,8 @@ https://github.com/litten/hexo-theme-yilia
 
 官方文档： https://hexo.io/zh-cn/docs/
 完成操作文档(包含多终端工作指南)： https://blog.csdn.net/sinat_37781304/article/details/82729029
+
+
+## 补充
+推荐一个很好看的主题，也是当前本人博客所用的主题，有比较详细的中文文档，https://mengd.js.org/ 
 
