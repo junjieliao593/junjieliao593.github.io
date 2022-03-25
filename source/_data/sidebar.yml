@@ -2,7 +2,7 @@
 recent: 
   enable: true            # 是否显示最新文章
   sort: date              # 可选参数: date or updated 根据`发布时间`排序,还是`更新时间`排序
-  limit: 5                # 显示多少篇 默认: 5
+  limit: 10                # 显示多少篇 默认: 5
 siteInfo:
   enable: true            # 是否显示侧边栏网站统计
   postCounter: true       # 文章数
