@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>test</title>
+      <link href="/2022/03/26/test/"/>
+      <url>/2022/03/26/test/</url>
+      
+        <content type="html"><![CDATA[<p><img src="/.com//1.jpg" alt="这是代替图片的文字，随便写"></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>java异步调用</title>
+      <link href="/2022/03/25/java%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8/"/>
+      <url>/2022/03/25/java%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8/</url>
+      
+        <content type="html"><![CDATA[<p>未完成参考 <a href="https://segmentfault.com/a/1190000010142962?utm_source=sf-similar-article">https://segmentfault.com/a/1190000010142962?utm_source=sf-similar-article</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>基于接口SchedulingConfigurer的动态定时任务</title>
+      <link href="/2022/03/25/%E5%9F%BA%E4%BA%8E%E6%8E%A5%E5%8F%A3SchedulingConfigurer%E7%9A%84%E5%8A%A8%E6%80%81%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/"/>
+      <url>/2022/03/25/%E5%9F%BA%E4%BA%8E%E6%8E%A5%E5%8F%A3SchedulingConfigurer%E7%9A%84%E5%8A%A8%E6%80%81%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/</url>
+      
+        <content type="html"><![CDATA[<p>一般配置都是基于注解(@Scheduled)的简单定时器，其使用固定的cron表达式，现在想使用动态方式配置任务周期。</p><h2 id="1-固定的简单定时器"><a href="#1-固定的简单定时器" class="headerlink" title="1. 固定的简单定时器"></a>1. 固定的简单定时器</h2><p>如下配置：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">package com.example.schedule.SimpleSchedule;</span><br><span class="line"></span><br><span class="line">import org.springframework.scheduling.annotation.Scheduled;</span><br><span class="line"></span><br><span class="line">import java.time.LocalDateTime;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @fileName：Schedule</span><br><span class="line"> * @createTime：2019/5/14 17:16</span><br><span class="line"> * @author：</span><br><span class="line"> * @version：</span><br><span class="line"> * @description：基于注解(@Scheduled)的简单定时器demo</span><br><span class="line"> *</span><br><span class="line"> * cron表达式语法:[秒] [分] [小时] [日] [月] [周] [年]</span><br><span class="line"> * @Scheduled(fixedDelay = 5000) //上一次执行完毕时间点之后5秒再执行</span><br><span class="line"> * @Scheduled(fixedDelayString = &quot;5000&quot;) //上一次执行完毕时间点之后5秒再执行</span><br><span class="line"> * @Scheduled(fixedRate = 5000) //上一次开始执行时间点之后5秒再执行</span><br><span class="line"> * @Scheduled(initialDelay=1000, fixedRate=5000) //第一次延迟1秒后执行，之后按fixedRate的规则每5秒执行一次</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">//1.主要用于标记配置类</span><br><span class="line">@Configuration</span><br><span class="line">// 2.开启定时任务</span><br><span class="line">@EnableScheduling</span><br><span class="line">public class Schedule &#123;</span><br><span class="line">    //3.添加定时任务</span><br><span class="line">    @Scheduled(cron = &quot;0/5 * * * * ?&quot;)</span><br><span class="line">    //或直接指定时间间隔，例如：5秒</span><br><span class="line">    //@Scheduled(fixedRate=5000)</span><br><span class="line"></span><br><span class="line">    private void configureTasks() &#123;</span><br><span class="line">        System.err.println(&quot;基于注解(@Scheduled)的简单定时器demo: &quot; + LocalDateTime.now());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><h2 id="2-基于接口SchedulingConfigurer的动态定时任务"><a href="#2-基于接口SchedulingConfigurer的动态定时任务" class="headerlink" title="2. 基于接口SchedulingConfigurer的动态定时任务"></a>2. 基于接口SchedulingConfigurer的动态定时任务</h2><p>此种方法实现SchedulingConfigurer 类，采用多线程方式跑定时任务</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @author ljj</span><br><span class="line"> */</span><br><span class="line">@Component</span><br><span class="line">@EnableScheduling</span><br><span class="line">@Slf4j</span><br><span class="line">public class ResourceBackupTask implements SchedulingConfigurer &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private ProjectService projectService;</span><br><span class="line"></span><br><span class="line">    @Value(&quot;$&#123;egova.wukong.project.backup.enabled:true&#125;&quot;)</span><br><span class="line">    private boolean projectBackupEnable;</span><br><span class="line"></span><br><span class="line">    @Value(&quot;$&#123;egova.wukong.project.backup.cron:0 0 2 * * ? &#125;&quot;)</span><br><span class="line">    private String projectBackupCron;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void configureTasks(ScheduledTaskRegistrar scheduledTaskRegistrar) &#123;</span><br><span class="line">        //增加任务 addTriggerTask可继续添加任务</span><br><span class="line">        scheduledTaskRegistrar.addTriggerTask(this::projectBackupTask, triggerContext -&gt; &#123;</span><br><span class="line">            CronTrigger cronTrigger = new CronTrigger(projectBackupCron);</span><br><span class="line">            return cronTrigger.nextExecutionTime(triggerContext);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 项目备份逻辑</span><br><span class="line">     */</span><br><span class="line">    void projectBackupTask() &#123;</span><br><span class="line">        if (!projectBackupEnable) &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        log.info(&quot;开始项目备份任务, cron配置为：&#123;&#125;&quot;, projectBackupCron);</span><br><span class="line">        int size = projectService.projectBackupTask();</span><br><span class="line">        log.info(&quot;项目备份任务结束，完成 &#123;&#125;个项目的备份&quot;, size);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="/2022/03/25/hello-world/"/>
+      <url>/2022/03/25/hello-world/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><span id="more"></span><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> hexo使用 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>一次线上OOM问题排查</title>
+      <link href="/2022/03/23/%E4%B8%80%E6%AC%A1%E7%BA%BF%E4%B8%8AOOM%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/"/>
+      <url>/2022/03/23/%E4%B8%80%E6%AC%A1%E7%BA%BF%E4%B8%8AOOM%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/</url>
+      
+        <content type="html"><![CDATA[<p>未完参考文章 <a href="https://www.jianshu.com/p/1b776d6af597">https://www.jianshu.com/p/1b776d6af597</a></p><span id="more"></span>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>hexo新建文章分类</title>
+      <link href="/2022/03/22/hexo%E6%96%B0%E5%BB%BA%E6%96%87%E7%AB%A0%E5%88%86%E7%B1%BB/"/>
+      <url>/2022/03/22/hexo%E6%96%B0%E5%BB%BA%E6%96%87%E7%AB%A0%E5%88%86%E7%B1%BB/</url>
+      
+        <content type="html"><![CDATA[<p>如何创建分类</p><span id="more"></span><h2 id="1-创建分类选项"><a href="#1-创建分类选项" class="headerlink" title="1.创建分类选项"></a>1.创建分类选项</h2><p>博客目录下执行</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure><p>成功后提示</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INFO  Created: E:\blog\junjieliao593.github.io\source\categories\index.md</span><br></pre></td></tr></table></figure><p>可以看到生成的文件</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2022-03-22 12:47:34</span><br><span class="line">---</span><br></pre></td></tr></table></figure><p>添加type: “categories”到内容中，添加后是这样的：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 文章分类</span><br><span class="line">date: 2017-05-27 13:47:40</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure><p>至此，成功给文章添加分类，点击首页的“分类”可以看到该分类下的所有文章。<br>当然，只有添加了categories: xxx的文章才会被收录到首页的“分类”中。</p><h2 id="2-给文章添加分类"><a href="#2-给文章添加分类" class="headerlink" title="2.给文章添加分类"></a>2.给文章添加分类</h2><p>添加tags和分类实例：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: hexo新建文章分类</span><br><span class="line">date: 2022-03-22 12:46:07</span><br><span class="line">tags: hexo</span><br><span class="line">toc: true</span><br><span class="line">categories: hexo使用</span><br><span class="line">---</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> hexo使用 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>使用Java8中的parallelStream的一次问题记录</title>
+      <link href="/2022/03/22/%E4%BD%BF%E7%94%A8Java8%E4%B8%AD%E7%9A%84parallelStream%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+      <url>/2022/03/22/%E4%BD%BF%E7%94%A8Java8%E4%B8%AD%E7%9A%84parallelStream%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<p>在 java8 中 添加了流Stream，可以让你以一种声明的方式处理数据。使用起来非常简单优雅。ParallelStream 则是一个并行执行的流，采用 ForkJoinPool 并行执行任务，提高执行速度。</p><span id="more"></span><h2 id="1-现象"><a href="#1-现象" class="headerlink" title="1. 现象"></a>1. 现象</h2><p>压测出现报错</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">2022-03-19 16:32:08</span><br><span class="line">Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.211-b12 mixed mode):</span><br><span class="line"></span><br><span class="line">&quot;Attach Listener&quot; #147 daemon prio=9 os_prio=0 tid=0x00007fd14c001000 nid=0x708f runnable [0x0000000000000000]</span><br><span class="line">   java.lang.Thread.State: RUNNABLE</span><br><span class="line"></span><br><span class="line">&quot;ForkJoinPool.commonPool-worker-1&quot; #146 daemon prio=5 os_prio=0 tid=0x00007fd0c0057800 nid=0x6370 waiting for monitor entry [0x00007fd0725ea000]</span><br><span class="line">   java.lang.Thread.State: BLOCKED (on object monitor)</span><br><span class="line">at java.util.stream.FindOps$FindTask.makeChild(FindOps.java:268)</span><br><span class="line">at java.util.stream.FindOps$FindTask.makeChild(FindOps.java:249)</span><br><span class="line">at java.util.stream.AbstractShortCircuitTask.compute(AbstractShortCircuitTask.java:120)</span><br><span class="line">at java.util.concurrent.CountedCompleter.exec(CountedCompleter.java:731)</span><br><span class="line">at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)</span><br><span class="line">at java.util.concurrent.ForkJoinPool.helpComplete(ForkJoinPool.java:1870)</span><br><span class="line">at java.util.concurrent.ForkJoinPool.awaitJoin(ForkJoinPool.java:2045)</span><br><span class="line">at java.util.concurrent.ForkJoinTask.doInvoke(ForkJoinTask.java:404)</span><br><span class="line">at java.util.concurrent.ForkJoinTask.invoke(ForkJoinTask.java:734)</span><br><span class="line">at java.util.stream.FindOps$FindOp.evaluateParallel(FindOps.java:159)</span><br><span class="line">at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:233)</span><br><span class="line">at java.util.stream.ReferencePipeline.findAny(ReferencePipeline.java:469)</span><br><span class="line">at com.egova.wukong.service.impl.PageServiceImpl.lambda$getPageCards$22(PageServiceImpl.java:571)</span><br><span class="line">at com.egova.wukong.service.impl.PageServiceImpl$$Lambda$1107/1403252310.apply(Unknown Source)</span><br><span class="line">at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)</span><br><span class="line">at java.util.Spliterators$ArraySpliterator.forEachRemaining(Spliterators.java:948)</span><br><span class="line">at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:481)</span><br><span class="line">at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:471)</span><br><span class="line">at java.util.stream.ReduceOps$ReduceTask.doLeaf(ReduceOps.java:747)</span><br><span class="line">at java.util.stream.ReduceOps$ReduceTask.doLeaf(ReduceOps.java:721)</span><br><span class="line">at java.util.stream.AbstractTask.compute(AbstractTask.java:316)</span><br><span class="line">at java.util.concurrent.CountedCompleter.exec(CountedCompleter.java:731)</span><br><span class="line">at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)</span><br><span class="line">at java.util.concurrent.ForkJoinPool$WorkQueue.execLocalTasks(ForkJoinPool.java:1040)</span><br><span class="line">at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1058)</span><br><span class="line">at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)</span><br><span class="line">at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)</span><br><span class="line"></span><br><span class="line">&quot;ForkJoinPool.commonPool-worker-7&quot; #145 daemon prio=5 os_prio=0 tid=0x00007fd0880ba000 nid=0x632f waiting for monitor entry [0x00007fd0720e5000]</span><br><span class="line">   java.lang.Thread.State: BLOCKED (on object monitor)</span><br><span class="line">at java.util.stream.FindOps$FindTask.makeChild(FindOps.java:268)</span><br><span class="line">at java.util.stream.FindOps$FindTask.makeChild(FindOps.java:249)</span><br><span class="line">at java.util.stream.AbstractShortCircuitTask.compute(AbstractShortCircuitTask.java:119)</span><br><span class="line">at java.util.concurrent.CountedCompleter.exec(CountedCompleter.java:731)</span><br><span class="line">at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)</span><br><span class="line">at java.util.concurrent.ForkJoinPool.helpComplete(ForkJoinPool.java:1870)</span><br><span class="line">at java.util.concurrent.ForkJoinPool.awaitJoin(ForkJoinPool.java:2045)</span><br><span class="line">at java.util.concurrent.ForkJoinTask.doInvoke(ForkJoinTask.java:404)</span><br><span class="line">at java.util.concurrent.ForkJoinTask.invoke(ForkJoinTask.java:734)</span><br></pre></td></tr></table></figure><p>错误日志指向ForkJoinTask，线程发生阻塞。项目代码</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"> .....</span><br><span class="line"></span><br><span class="line">List&lt;CardData&gt; finalCardDataList = cardDataList;</span><br><span class="line">return pageCards.parallelStream()  //第一次并行流</span><br><span class="line">.sorted(Comparator.comparingInt(PageCard::getLevel).reversed())</span><br><span class="line">.map(pageCard -&gt; &#123;</span><br><span class="line">PageCardModel pageCardModel = new PageCardModel();</span><br><span class="line">pageCardModel.setBase(cards.parallelStream() //第二次并行流</span><br><span class="line">.filter(card -&gt; StringUtils.equals(card.getId(), pageCard.getCardId())).findAny().orElse(null));</span><br><span class="line">pageCardModel.setData(finalCardDataList.parallelStream() //第三次并行流</span><br><span class="line">.filter(cardData -&gt; StringUtils.equals(cardData.getId(), pageCard.getDataId())).findAny().orElse(null));</span><br><span class="line">pageCardModel.setStyle(pageCard.getStyle());</span><br><span class="line">pageCardModel.setId(pageCard.getId());</span><br><span class="line">pageCardModel.setName(pageCard.getName());</span><br><span class="line">return pageCardModel;</span><br><span class="line">&#125;).collect(Collectors.toList());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">parallelStream流内，嵌套两层，并返回大json数据，导致线程占满，IO阻塞</span><br></pre></td></tr></table></figure><h2 id="2-初步推测"><a href="#2-初步推测" class="headerlink" title="2. 初步推测"></a>2. 初步推测</h2><h3 id="并行流陷阱"><a href="#并行流陷阱" class="headerlink" title="并行流陷阱"></a>并行流陷阱</h3><ul><li>线程安全<ul><li>由于并行流使用多线程，则一切线程安全问题都应该是需要考虑的问题，如：资源竞争、死锁、事务、可见性等等</li></ul></li><li>线程消费<ul><li>在虚拟机启动时，我们指定了worker线程的数量，整个程序的生命周期都将使用这些工作线程；这必然存在任务生产和消费的问题，如果某个生产者生产了许多重量级的任务（耗时很长），那么其他任务毫无疑问将会没有工作线程可用；更可怕的事情是这些工作线程正在进行IO阻塞。</li></ul></li></ul><h2 id="3-设置并行参数"><a href="#3-设置并行参数" class="headerlink" title="3.设置并行参数"></a>3.设置并行参数</h2><p>我们可以通过虚拟机启动参数，控制ForkJoinPool的线程数<br>-Djava.util.concurrent.ForkJoinPool.common.parallelism&#x3D;N</p><p>来设置worker的数量。</p><h2 id="4-扩展"><a href="#4-扩展" class="headerlink" title="4. 扩展"></a>4. 扩展</h2><p>parallelStreams()，使用ForkJoinPool。<br>资源耗尽时使用线程池的默认拒绝策略，在默认的ThreadPoolExecutor.AbortPolicy中，处理程序抛出一个拒绝后运行时RejectedExecutionException。</p><h2 id="4-小结"><a href="#4-小结" class="headerlink" title="4. 小结"></a>4. 小结</h2><p>串行流：适合存在线程安全问题、阻塞任务、重量级任务，以及需要使用同一事务的逻辑。</p><p>并行流：适合没有线程安全问题、较单纯的数据处理任务。</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>windows下搭建hexo博客</title>
+      <link href="/2022/03/18/win10%E4%B8%8B%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2/"/>
+      <url>/2022/03/18/win10%E4%B8%8B%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2/</url>
+      
+        <content type="html"><![CDATA[<p>[TOC]</p><span id="more"></span><h2 id="1-安装nodejs"><a href="#1-安装nodejs" class="headerlink" title="1.安装nodejs"></a>1.安装nodejs</h2><p>略</p><h2 id="2-切换淘宝源-有梯子则不切换-："><a href="#2-切换淘宝源-有梯子则不切换-：" class="headerlink" title="2.切换淘宝源(有梯子则不切换)："></a>2.切换淘宝源(有梯子则不切换)：</h2><p>npm install -g cnpm –registry &#x3D;<a href="https://registry.npm.taobao.org/">https://registry.npm.taobao.org</a></p><h2 id="3-安装hexo"><a href="#3-安装hexo" class="headerlink" title="3.安装hexo:"></a>3.安装hexo:</h2><p>cnpm install -g hexo-cli</p><h2 id="4-使用hexo搭建。"><a href="#4-使用hexo搭建。" class="headerlink" title="4.使用hexo搭建。"></a>4.使用hexo搭建。</h2><ul><li><p>新建blog文件夹</p></li><li><p>初始化sudo hexo init或 hexo init   </p><ul><li><p>windows管理员权限出现问题。hexo : 无法加载文件 C:\Users\xxx\AppData\Roaming\npm\hexo.ps1，因为在此系统上禁止运行脚本。</p></li><li><p>解决方案<br>在默认情况下，我们是无法执行<a href="https://so.csdn.net/so/search?q=powershell&spm=1001.2101.3001.7020">powershell</a>脚本的， 需要更改执行策略。win10下更改执行策略：<br>1.打开设置</p><p>2.搜索power</p><p>选择选项：允许本地powershell在不签名的情况下运行<br>3.勾选，点击应用就可以了</p></li></ul></li></ul><h2 id="5-启动"><a href="#5-启动" class="headerlink" title="5.启动"></a>5.启动</h2><p>hexo s</p><h2 id="6-github新建仓库。"><a href="#6-github新建仓库。" class="headerlink" title="6.github新建仓库。"></a>6.github新建仓库。</h2><p>仓库名必须是 用户名.github.io </p><ul><li>例如junjieliao593新建的仓库名为：junjieliao593.github.io.git</li></ul><h2 id="7-本地下载git插件"><a href="#7-本地下载git插件" class="headerlink" title="7.本地下载git插件"></a>7.本地下载git插件</h2><ul><li>cnpm install –save hexo-deployer-git</li></ul><h2 id="8-设置blog目录下-cofig-yml配置。"><a href="#8-设置blog目录下-cofig-yml配置。" class="headerlink" title="8.设置blog目录下__cofig.yml配置。"></a>8.设置blog目录下__cofig.yml配置。</h2><ul><li>Deloyment配置git仓库地址及分支 <ul><li>deploy:<br>type: git<br>repo: <a href="https://github.com/junjieliao593/junjieliao593.github.io">https://github.com/junjieliao593/junjieliao593.github.io</a><br>branch: master</li></ul></li></ul><h2 id="9-部署发布"><a href="#9-部署发布" class="headerlink" title="9.部署发布"></a>9.部署发布</h2><p>hexo d</p><h2 id="10-访问"><a href="#10-访问" class="headerlink" title="10.访问"></a>10.访问</h2><p>junjieliao593.github.io</p><h2 id="11-主题"><a href="#11-主题" class="headerlink" title="11.主题"></a>11.主题</h2><p><a href="https://github.com/litten/hexo-theme-yilia">https://github.com/litten/hexo-theme-yilia</a></p><ul><li><p>git clone <a href="https://github.com/litten/hexo-theme-yilia.git">https://github.com/litten/hexo-theme-yilia.git</a> themes&#x2F;yilia</p></li><li><p>修改blog目录下_config.yml配置：   theme:  yilia</p></li><li><p>清理hexo clean</p></li><li><p>重构hexo g</p></li><li><p>预览hexo s</p></li><li><p>推到远程仓库hexo d</p></li><li><p>其他主题<a href="https://github.com/theme-next/hexo-theme-next">https://github.com/theme-next/hexo-theme-next</a></p></li></ul><h2 id="12-编辑"><a href="#12-编辑" class="headerlink" title="12.编辑"></a>12.编辑</h2><p>文章md文件存放在 blog\source_posts目录下，用其他编辑器操作即可。</p><h2 id="13-后续可参考文档"><a href="#13-后续可参考文档" class="headerlink" title="13. 后续可参考文档"></a>13. 后续可参考文档</h2><p>官方文档： <a href="https://hexo.io/zh-cn/docs/">https://hexo.io/zh-cn/docs/</a><br>完成操作文档(包含多终端工作指南)： <a href="https://blog.csdn.net/sinat_37781304/article/details/82729029">https://blog.csdn.net/sinat_37781304/article/details/82729029</a></p><h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p>推荐一个很好看的主题，也是当前本人博客所用的主题，有比较详细的中文文档，<a href="https://mengd.js.org/">https://mengd.js.org/</a> </p>]]></content>
+      
+      
+      <categories>
+          
+          <category> hexo使用 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
