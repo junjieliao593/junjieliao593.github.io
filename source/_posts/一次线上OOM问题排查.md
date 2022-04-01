@@ -6,3 +6,5 @@ toc: true
 ---
 未完参考文章 https://www.jianshu.com/p/1b776d6af597
 <!--more-->
+
+ jdk8 的内存模型--
