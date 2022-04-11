@@ -2,7 +2,8 @@
 title: 基于接口SchedulingConfigurer的动态定时任务
 toc: true
 date: 2022-03-25 10:33:01
-tags:
+tags: spring
+categories: spring
 ---
 一般配置都是基于注解(@Scheduled)的简单定时器，其使用固定的cron表达式，现在想使用动态方式配置任务周期。
 

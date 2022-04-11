@@ -1,8 +1,9 @@
 ---
 title: 使用Java8中的parallelStream的一次问题记录
 date: 2022-03-22 00:27:51
-tags:
+tags: spring
 toc: true
+categories: spring
 ---
 在 java8 中 添加了流Stream，可以让你以一种声明的方式处理数据。使用起来非常简单优雅。ParallelStream 则是一个并行执行的流，采用 ForkJoinPool 并行执行任务，提高执行速度。
 
